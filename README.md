@@ -1,4 +1,6 @@
 # ngx-text-diff
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fkalras%2Fngx-text-diff-ivy.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fkalras%2Fngx-text-diff-ivy?ref=badge_shield)
+
 - A simple text diff `component` to be used with Angular and based on `google diff match patch` library.
 
 ## Dependencies
@@ -125,3 +127,7 @@ Run `ng build ngx-text-diff` to build the library. The build artifacts will be s
 ## Credits
 
 This project is based on [google diff match patch](https://github.com/google/diff-match-patch).
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fkalras%2Fngx-text-diff-ivy.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fkalras%2Fngx-text-diff-ivy?ref=badge_large)
