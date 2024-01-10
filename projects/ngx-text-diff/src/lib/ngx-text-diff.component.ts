@@ -23,11 +23,11 @@ import { ScrollDispatcher, CdkScrollable } from '@angular/cdk/scrolling';
 })
 export class NgxTextDiffComponent implements OnInit, AfterViewInit, OnDestroy {
   private _hideMatchingLines = false;
-  @ViewChildren(ContainerDirective) containers: QueryList<ContainerDirective>;
+  @ViewChildren(ContainerDirective) containers: QueryList<ContainerDirective> | undefined;
   @Input() format: DiffTableFormat = 'SideBySide';
   @Input() left = '';
   @Input() right = '';
-  @Input() diffContent: Observable<DiffContent>;
+  @Input() diffContent: Observable<DiffContent> | undefined;
   @Input() loading = false;
   @Input() showToolbar = true;
   @Input() showBtnToolbar = true;
@@ -39,11 +39,11 @@ export class NgxTextDiffComponent implements OnInit, AfterViewInit, OnDestroy {
   set hideMatchingLines(hide: boolean) {
     this.hideMatchingLinesChanged(hide);
   }
-  @Input() outerContainerClass: string;
+  @Input() outerContainerClass: string | undefined;
   @Input() outerContainerStyle: any;
-  @Input() toolbarClass: string;
+  @Input() toolbarClass: string | undefined;
   @Input() toolbarStyle: any;
-  @Input() compareRowsClass: string;
+  @Input() compareRowsClass: string | undefined;
   @Input() compareRowsStyle: any;
   @Input() synchronizeScrolling = true;
   @Output() compareResults = new EventEmitter<DiffResults>();
@@ -182,19 +182,19 @@ export class NgxTextDiffComponent implements OnInit, AfterViewInit, OnDestroy {
     this.compareResults.next(diffResults);
   }
 
-  trackTableRows(index, row: DiffTableRowResult) {
+  trackTableRows(index: number, row: DiffTableRowResult) {
     return row && row.leftContent ? row.leftContent.lineContent : row && row.rightContent ? row.rightContent.lineContent : undefined;
   }
 
-  trackDiffs(index, diff: DiffPart) {
+  trackDiffs(index: number, diff: DiffPart) {
     return diff && diff.content ? diff.content : undefined;
   }
 
   private initScrollListener() {
-    this.subscriptions.push(this.scrollService.scrolled().subscribe((scrollableEv: CdkScrollable) => {
+    this.subscriptions.push(this.scrollService.scrolled().subscribe((scrollableEv: any) => {
       if (scrollableEv && this.synchronizeScrolling) {
         const scrollableId = scrollableEv.getElementRef().nativeElement.id;
-        const nonScrolledContainer: ContainerDirective = this.containers.find(container => container.id !== scrollableId);
+        const nonScrolledContainer: ContainerDirective | undefined = this.containers ? this.containers.find(container => container.id !== scrollableId) : undefined;
         if (nonScrolledContainer) {
           nonScrolledContainer.element.scrollTo({
             top: scrollableEv.measureScrollOffset('top'),

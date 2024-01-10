@@ -65,12 +65,12 @@ export class CodeEditorComponent implements AfterViewInit, OnDestroy, ControlVal
   @Output() focusChange = new EventEmitter<boolean>();
   /* called when the editor is scrolled */
   @Output() scroll = new EventEmitter<ScrollInfo>();
-  @ViewChild('ref', { static: true }) ref: ElementRef;
+  @ViewChild('ref', { static: true }) ref: ElementRef | undefined;
   value = '';
   disabled = false;
   isFocused = false;
-  codeMirror: EditorFromTextArea;
-  private _differ: KeyValueDiffer<string, any>;
+  codeMirror: EditorFromTextArea | undefined;
+  private _differ: KeyValueDiffer<string, any> | undefined;
   private _options: any;
 
   constructor(private _differs: KeyValueDiffers, private _ngZone: NgZone) {}
@@ -83,15 +83,15 @@ export class CodeEditorComponent implements AfterViewInit, OnDestroy, ControlVal
     const { fromTextArea } = require('codemirror');
 
     this._ngZone.runOutsideAngular(() => {
-      this.codeMirror = fromTextArea(this.ref.nativeElement, this._options);
-      this.codeMirror.on('cursorActivity', cm => this._ngZone.run(() => this.cursorActive(cm)));
-      this.codeMirror.on('scroll', this.scrollChanged.bind(this));
-      this.codeMirror.on('blur', () => this._ngZone.run(() => this.focusChanged(false)));
-      this.codeMirror.on('focus', () => this._ngZone.run(() => this.focusChanged(true)));
-      this.codeMirror.on('change', (cm: Editor, change: EditorChangeLinkedList) =>
+      this.codeMirror = fromTextArea(this.ref?.nativeElement, this._options);
+      this.codeMirror?.on('cursorActivity', cm => this._ngZone.run(() => this.cursorActive(cm)));
+      this.codeMirror?.on('scroll', this.scrollChanged.bind(this));
+      this.codeMirror?.on('blur', () => this._ngZone.run(() => this.focusChanged(false)));
+      this.codeMirror?.on('focus', () => this._ngZone.run(() => this.focusChanged(true)));
+      this.codeMirror?.on('change', (cm: Editor, change: EditorChangeLinkedList) =>
         this._ngZone.run(() => this.codemirrorValueChanged(cm, change))
       );
-      this.codeMirror.setValue(this.value);
+      this.codeMirror?.setValue(this.value);
     });
   }
   /*ngDoCheck() {

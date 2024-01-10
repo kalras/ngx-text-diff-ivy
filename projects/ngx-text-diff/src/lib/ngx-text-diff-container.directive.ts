@@ -4,7 +4,7 @@ import { Directive, Input, ElementRef } from '@angular/core';
   selector: '[tdContainer]',
 })
 export class ContainerDirective {
-  @Input() id: string;
+  @Input() id: string | undefined;
 
   element: HTMLTableHeaderCellElement;
 

@@ -43,22 +43,22 @@ export class NgxTextDiffService {
       }
       const diffType: number = diff[0];
       const diffValue: string = diff[1];
-      let leftDiffRow: DiffTableRowResult = null;
-      let rightDiffRow: DiffTableRowResult = null;
-      let leftContent: DiffLineResult = null;
-      let rightContent: DiffLineResult = null;
-      let rowTemp: DiffTableRowResult = null;
+      let leftDiffRow: DiffTableRowResult | undefined;
+      let rightDiffRow: DiffTableRowResult | undefined;
+      let leftContent: DiffLineResult | undefined;
+      let rightContent: DiffLineResult | undefined;
+      let rowTemp: DiffTableRowResult | undefined;
       switch (diffType) {
         case DIFF_EQUAL: // 0
           diffValue
             .split('\n')
-            .filter((value, index, array) => {
+            .filter((value: string, index: number, array: Array<string>) => {
               if (index === array.length - 1) {
                 return !isEmpty(value);
               }
               return true;
             })
-            .forEach(line => {
+            .forEach((line: string) => {
               leftContent = {
                 lineNumber: lineLeft,
                 lineContent: line,
@@ -86,13 +86,13 @@ export class NgxTextDiffService {
         case DIFF_DELETE: // -1
           diffValue
             .split('\n')
-            .filter((value, index, array) => {
+            .filter((value: string, index: number, array: Array<string>) => {
               if (index === array.length - 1) {
                 return !isEmpty(value);
               }
               return true;
             })
-            .forEach(line => {
+            .forEach((line: string) => {
               rightDiffRow = rows.find(
                 row => !row.leftContent && row.rightContent && row.rightContent.lineNumber === lineLeft && row.rightContent.prefix !== ''
               );
@@ -129,13 +129,13 @@ export class NgxTextDiffService {
         case DIFF_INSERT: // 1
           diffValue
             .split('\n')
-            .filter((value, index, array) => {
+            .filter((value: string, index: number, array: Array<string>) => {
               if (index === array.length - 1) {
                 return !isEmpty(value);
               }
               return true;
             })
-            .forEach(line => {
+            .forEach((line: string) => {
               leftDiffRow = rows.find(
                 row => row.leftContent && !row.rightContent && row.leftContent.lineNumber === lineRight && row.leftContent.prefix !== ''
               );
@@ -177,10 +177,10 @@ export class NgxTextDiffService {
   private countDiffs(result: DiffTableRowResult): number {
     let diffCount = 0;
     if (result.leftContent) {
-      diffCount += result.leftContent.lineDiffs.filter(diff => diff.isDiff).length;
+      diffCount += result.leftContent.lineDiffs.filter((diff: any) => diff.isDiff).length;
     }
     if (result.leftContent) {
-      diffCount += result.rightContent.lineDiffs.filter(diff => diff.isDiff).length;
+      diffCount += result.rightContent.lineDiffs.filter((diff: any) => diff.isDiff).length;
     }
     return diffCount;
   }

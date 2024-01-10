@@ -1,25 +1,12 @@
 {
-  "name": "ngx-text-diff-app",
-  "version": "0.0.0",
+  "name": "ngx-text-diff-ivy",
+  "version": "0.17.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "build_report": "ng build --stats-json",
-    "test": "echo 1",
-    "lint": "ng lint",
-    "postinstall": "ngcc",
-    "e2e": "ng e2e",
-    "build_lib": "ng build ngx-text-diff --prod",
-    "copy-license": "copyfiles ./projects/ngx-text-diff/LICENSE ./dist/ngx-text-diff",
-    "copy-readme": "copyfiles ./projects/ngx-text-diff/README.md ./dist/ngx-text-diff",
-    "copy-files": "npm run copy-license && npm run copy-readme",
-    "npm_pack": "cd dist/ngx-text-diff && npm pack",
-    "package": "npm run build_lib && npm run copy-files && npm run npm_pack"
-  },
-  "engines": {
-    "node": "12.16.2",
-    "npm": "6.12.0"
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test"
   },
   "private": true,
   "dependencies": {
